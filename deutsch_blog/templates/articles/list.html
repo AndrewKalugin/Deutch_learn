@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Образовательные статьи{% endblock %}
+
+{% block content %}
+
+    {% if latest_articles_list %}
+
+        {% for a in latest_articles_list %}
+
+            <article class="post">
+                <header>
+                    <div class="title">
+                        <h2><a href="{% url 'articles:detail' a.id%}">{{a.article_title}}</a></h2>
+                        <p>короткое описание</p>
+                    </div>
+                    <div class="meta">
+                        <time class="published" datetime="2015-11-01">{{a.pub_date|date:"j F (Y)"}}</time>
+                        <a href="#" class="author"><span class="name">{{a.author_name}}</span>
+                    </div>
+                </header>
+                <p></p>
+                <footer>
+                    <ul class="actions">
+                        <li><a href="{% url 'articles:detail' a.id%}" class="button large">Continue Reading</a></li>
+                    </ul>
+                    <ul class="stats">
+                        <li class="icon solid fa-heart">_</li>
+                        <li class="icon solid fa-comment">_</li>
+                    </ul>
+                </footer>
+            </article>
+
+
+            <a href=""></a><br />
+        {% endfor %}
+
+    {% else %}
+        Статья не найдена
+    {% endif %}
+
+{% endblock %}
+
+
+{% block activity %}
+<!-- Mini Post -->
+<article class="mini-post">
+    <header>
+        <a href="single.html"><h3>Activity</h3>
+            <span class="published">Name</span></a>
+    </header>
+</article>
+{% endblock %}

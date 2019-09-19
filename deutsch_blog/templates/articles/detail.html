@@ -1,0 +1,60 @@
+{% extends 'single.html' %}
+
+{% block title %}{{article.article_title}}{% endblock %}
+
+{% block content %}
+
+
+<div id="main">
+
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a href="#">{{article.article_title}}</a></h2>
+                <p></p>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="2015-11-01">{{article.pub_date|date:"j F (Y)"}}</time>
+                <a href="#" class="author"><span class="name">{{article.author_name}}</span><img src="images/avatar.jpg" alt="" /></a>
+            </div>
+        </header>
+        {{article.article_text}}
+        <footer>
+            <ul class="stats">
+                <li class="icon solid fa-heart"> _</li>
+                <li class="icon solid fa-comment"> {{comments_count}}</li>
+            </ul>
+        </footer>
+    </article>
+</div>
+
+<hr>
+
+{% if latest_comments_list %}
+
+{% for comment in latest_comments_list %}
+
+<article class="mini-post">
+    <header>
+        <h3>{{comment.author_name}}</h3>
+        <text class="published">{{comment.comment_text}}</text>
+    </header>
+</article>
+{% endfor %}
+
+{% else %}
+Комментариев нет
+{% endif %}
+
+<hr>
+
+<form action="{% url 'articles:leave_comment' article.id %}" method="post">
+
+    {% csrf_token %}
+    <input type="text" required placeholder="Ваше имя" name="name"><br/>
+    <textarea name="text" required placeholder="Текст комментария" cols="40" rows="3"></textarea><br/>
+    <button type="submit">Оставить комментарий</button>
+</form>
+
+{% endblock %}
